@@ -1,0 +1,110 @@
+!!!
+%html
+  %head
+    %meta{ 'http-equiv' => 'content-type', :content => 'text/html; charset=utf-8' }
+    %title
+      StackFu Docs
+      = @item[:title]
+    = stylesheet_link_tag 'reset', 'home', 'application', 'coderay'
+
+  %body
+    .heading
+      .top
+        .logo
+          = link_to(image_tag('logo.png'), "http://beta.stackfu.com")
+
+        %span#signed_in
+          / :erb
+          /   not signed in, <%= link_to 'sign in now', "http://beta.stackfu.com" %>
+          Guides version
+          %b 0.1beta
+
+        .navigation
+          %ul
+            / %li= link_to 'Scripts', "scripts_path" #, :class => active?('scripts')
+            / %li= link_to 'Sign in', "new_user_session_path" #, :class => active?('sessions', 'passwords')
+            / %li= link_to 'Sign up', "new_user_registration_path" #, :class => active?('registrations')
+
+      .bottom
+        .inner
+          .sub-navigation
+
+    .wrapper#wrapper
+      .content#content
+        .topics
+          .topic
+            Getting Started
+            %ul
+              %li= link 'Index', '/'
+              %li= link 'Quick Start'
+
+          .topic
+            Rapid Deployment
+            %ul
+              %li= link 'Introduction'
+              %li= link 'Preparation'
+              %li= link 'Bootstrapping'
+              %li= link 'Publishing'
+              %li= link 'Updating'
+              %li= link 'Workflow'
+              %li= link 'Troubleshooting'
+              %li= link 'Deleting'
+              
+          .topic
+            Advanced Topics
+            %ul
+              %li= link 'Security'
+              %li= link 'Engines'
+              %li= link 'Handling DNS'
+              %li= link 'Add-ons'
+              %li= link 'Backups'
+              %li= link 'Deployment Hooks'
+              %li= link 'Remote Commands'
+              %li= link 'Webby Management'
+          
+          .topic
+            Webby Manager
+            %ul
+              %li= link 'Getting Started'
+              %li= link 'Deploying'
+              %li= link 'Configuring DNS'
+              %li= link 'Account Management'
+              %li= link 'Testing Scripts'
+              
+        .article
+          .contents
+            = yield
+        %br{ :clear => 'all' }
+        
+    %a{:href => "http://github.com/stackfu/docs", :target => "_blank"}
+      %img{:alt => "Fork me on GitHub", :src => "http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png", :style => "position: absolute; top: 0; right: 0; border: 0;"}/
+
+    .footer
+      .inner
+        .left
+          .navigation
+            %ul
+              %li= link_to 'StackFu Ruby Gem', ''
+              %li= link_to 'Blog', ''
+              %li= link_to 'Twitter', ''
+              %li= link_to 'FAQ', ''
+              %li= link_to 'Support', ''
+              %li= link_to 'Terms &amp; Conditions', ''
+              %li= link_to 'Privacy Policy', ''
+              %li= link_to 'Feedback', ''
+          .text
+            %p
+              &copy; Copyright 2010-present StackFu. All Rights Reserved.
+            %p
+              StackFu and it’s logo are trademarks of StackFu.
+              
+    :javascript
+      var clicky = { log: function(){ return; }, goal: function(){ return; }};
+      var clicky_site_id = 262312;
+      (function() {
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = ( document.location.protocol == 'https:' ? 'https://static.getclicky.com/js' : 'http://static.getclicky.com/js' );
+        ( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
+      })();

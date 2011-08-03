@@ -1,0 +1,56 @@
+--- 
+title: Requirements
+---
+
+%h2 Requirements
+
+%p
+  Before installing the script, the StackFu engine can perform some checks 
+  on the environment to make sure the system meets the preconditions 
+  specified in the Requirements section.
+
+%p
+  The requirements descriptor file has the following format:
+
+%pre
+  %code
+    :preserve
+      --- 
+      requirements: 
+      - data: /usr/bin/apt-get
+        type: ExecutableExists
+      - data: /var/data/some_file.dat
+        type: FileExists
+
+%p
+  Each entry has a <code>type</code> and <code>data</code> field. In the example, 
+  two checks will be performed: that the file <code>/usr/bin/apt-get</code> exists 
+  and is executable and the the file <code>/var/data/some_file.dat</code> also exists.
+
+%p Here are the types of checks the engine can perform:
+
+<%= table(
+	:headers => ["Type", "Will assure"],
+	:contents => <<-EOS
+  FileExists    | that the given file exists			     
+  SymlinkExists | that the given symlink exists            
+  ExecutableExists    | that the given file exists and is executable
+  DirExists     | that the given directory exits           
+  ProcessExists | that the process is runnning             
+  RubyCanLoad   | that ruby can load a given lib      
+  RubyGem       | that a given ruby gem is installed  
+EOS
+) %>
+
+%p And the negative forms:
+
+<%= table(
+  	:headers => ["Type", "Will assure"],
+  	:contents => <<-EOS
+  FileDoesntExist    | that the given file doesn't exist			     
+  SymlinkDoesntExist | that the given symlink doesn't exist            
+  ExecutableDoesntExist    | that the given file doesn't exist exist or isn't executable
+  DirDoesntExist     | that the given directory doesn't exist           
+  ProcessDoesntExist | that the process isn't runnning             
+EOS
+) %>
