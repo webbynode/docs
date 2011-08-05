@@ -1,0 +1,101 @@
+--- 
+title: Handling DNS
+---
+
+%h3 Aliases 
+
+You can manage the DNS aliases of an application using the <b>dns_aliases</b> command:
+
+%code
+  %pre
+    :preserve
+      $ wn help dns_aliases
+      Changes the DNS aliases for this application
+      Usage: webbynode dns_aliases [action] [alias]
+      Parameters:
+      action              add, remove or show, optional
+      alias               alias, optional
+
+The default action is to list your aliases:
+
+%code
+  %pre
+    :preserve
+      $ wn dns_aliases
+      No current aliases. To add new aliases use:
+
+      wn dns_aliases add new-dns-alias
+
+You can also add new aliases:
+
+%code
+  %pre
+    :preserve
+      $ wn dns_aliases add subdomain.mywebsite.com
+      Alias subdomain.mywebsite.com added.
+      Current aliases: subdomain.mywebsite.com
+
+      $ wn dns_aliases add subdomain2.mywebsite.com
+      Alias subdomain2.mywebsite.com added.
+      Current aliases: subdomain.mywebsite.com subdomain2.mywebsite.com
+
+And remove them:
+
+%code
+  %pre
+    :preserve
+      $ wn dns_aliases remove subdomain2.mywebsite.com
+      Alias subdomain2.mywebsite.com removed.
+      Current aliases: subdomain.mywebsite.com
+
+By default, when you push your application, we don't recreate your vhosts file. 
+This happens because we want to allow our users to customize their vhosts and 
+prevent overwriting those customizations every time an user uses the 
+<b>wn push</b> command.
+
+In order to make the server aknowledge your new aliases, you have to push using the 
+<b>--recreate-vhost</b> option. Note the message below indicating the recreation 
+of the vhost file:
+
+%code
+  %pre
+    :preserve
+      $ wn push --recreate-vhost 
+      [Webbynode] Pushing r3app
+      Counting objects: 9, done.
+      Delta compression using up to 2 threads.
+      Compressing objects: 100% (4/4), done.
+      Writing objects: 100% (5/5), 467 bytes, done.
+      Total 5 (delta 1), reused 0 (delta 0)
+      remote: HEAD is now at af5dfdb x
+      remote: 
+      remote: ----------------------------
+      remote:   Webbynode git deployment 
+      remote: ----------------------------
+      remote: 
+      remote: Apache webserver detected...
+      remote: Deploying application r3app as mywebsite.com...
+      remote: 
+      remote: Configuring addons...
+      remote: 
+      remote: Configuring Rails 3 application...
+      remote:   => Configuring apache vHost...
+      remote:      Recreating vhost with aliases: subdomain.mywebsite.com...
+      remote:   => Configuring database...
+      remote:   => Bundling gems...
+      remote:   => Migrating database...
+      remote: /var/rapp/r3app
+      remote: 
+      remote: Restarting apache
+      remote: 
+      remote: r3app deployed successfully.
+      remote: 
+
+      To ssh://git@67.23.79.85:22/var/rapp/r3app
+      760c838..af5dfdb  HEAD -> master
+
+      [Webbynode] Finished pushing r3app
+
+      From this point, all your aliases should be reflected on the server.
+
+

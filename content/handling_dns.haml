@@ -4,213 +4,25 @@ title: Handling DNS
 
 %h2 Handling DNS
 
-With the Webbynode RubyGem you can manipulate the way your application respond to certain domains. You
-can change the currently assigned dns entry or add aliases to the same app.
+%p
+  With the Webbynode RubyGem you can manipulate the way your application respond to certain domains. You
+  can change the currently assigned dns entry or add aliases to the same app.
 
-%h3 Changing the DNS
+%p
+  Please refer to the following subsections for additional information:
 
-To change the DNS entry you application responds to, you need to use the <b>change_dns</b> command.
-
-Here's an example of how it's used:
-
-%code
-  %pre
-    :preserve
-      $ wn change_dns rubyista.info
-      [Webbynode] Changing DNS to rubyista.info...
-      Creating DNS entries for www.rubyista.info and rubyista.info...
-      Your application will start responding to rubyista.info after next deployment.
-
-.hint
-  %b HINT:
-  If you use a top-level domain name (ie, mydomain.com) the gem will automatically
-  add the domain to Webby Manager's DNS Server, and you don't need to do any manual
-  changes.
-
-Here's another example, now with a subdomain:
-
-%code
-  %pre
-    :preserve
-      $ wn change_dns subdomain.rubyista.info
-      [Webbynode] Changing DNS to subdomain.rubyista.info...
-      Creating DNS entry for subdomain.rubyista.info...
-      Your application will start responding to 
-      subdomain.rubyista.info after next deployment.
-
-After you run this command, the application will start responding to the new DNS entry
-after your next push.
-
-%h3 Wildcards
-
-For applications that uses subdomains, a wildcard domain may be necessary. To use a wildcard 
-DNS with Webbynode gem, just change the DNS using "*.yourdomain.com":
-
-%code
-  %pre
-    :preserve
-      $ wn change_dns \*.rubyista.com
-      [Webbynode] Changing DNS to *.rubyista.com...
-      Creating DNS entry for *.rubyista.com...
-      Your application will start responding to 
-      *.rubyista.com after next deployment.
-
-Next time you push your app you will note the following output:
-
-%code
-  %pre
-    :preserve
-      $ wn push
-      [Webbynode] Pushing r3app
-      Counting objects: 146, done.
-      Delta compression using up to 2 threads.
-      Compressing objects: 100% (122/122), done.
-      Writing objects: 100% (146/146), 94.78 KiB, done.
-      Total 146 (delta 34), reused 0 (delta 0)
-      remote: Checked out master branch
-      remote: 
-      remote: ----------------------------
-      remote:   Webbynode git deployment 
-      remote: ----------------------------
-      remote: 
-      remote: Apache webserver detected...
-      remote: Deploying application r3app as *.rubyista.com...
-      remote: 
-      remote: Configuring addons...
-      remote: 
-      remote: Configuring Rails 3 application...
-      remote:   => Configuring apache vHost...
-      remote:      Setting up wildcard alias...
-      (...)
-
-After that, your application will start responding to anything that ends with the domain you 
-specified, in this case <b>rubyista.com</b>.
-
-%h3 Aliases 
-
-You can manage the DNS aliases of an application using the <b>dns_aliases</b> command:
-
-%code
-  %pre
-    :preserve
-      $ wn help dns_aliases
-      Changes the DNS aliases for this application
-      Usage: webbynode dns_aliases [action] [alias]
-      Parameters:
-      action              add, remove or show, optional
-      alias               alias, optional
-
-The default action is to list your aliases:
-
-%code
-  %pre
-    :preserve
-      $ wn dns_aliases
-      No current aliases. To add new aliases use:
-
-      wn dns_aliases add new-dns-alias
-
-You can also add new aliases:
-
-%code
-  %pre
-    :preserve
-      $ wn dns_aliases add subdomain.mywebsite.com
-      Alias subdomain.mywebsite.com added.
-      Current aliases: subdomain.mywebsite.com
-
-      $ wn dns_aliases add subdomain2.mywebsite.com
-      Alias subdomain2.mywebsite.com added.
-      Current aliases: subdomain.mywebsite.com subdomain2.mywebsite.com
-
-And remove them:
-
-%code
-  %pre
-    :preserve
-      $ wn dns_aliases remove subdomain2.mywebsite.com
-      Alias subdomain2.mywebsite.com removed.
-      Current aliases: subdomain.mywebsite.com
-
-By default, when you push your application, we don't recreate your vhosts file. 
-This happens because we want to allow our users to customize their vhosts and 
-prevent overwriting those customizations every time an user uses the 
-<b>wn push</b> command.
-
-In order to make the server aknowledge your new aliases, you have to push using the 
-<b>--recreate-vhost</b> option. Note the message below indicating the recreation 
-of the vhost file:
-
-%code
-  %pre
-    :preserve
-      $ wn push --recreate-vhost 
-      [Webbynode] Pushing r3app
-      Counting objects: 9, done.
-      Delta compression using up to 2 threads.
-      Compressing objects: 100% (4/4), done.
-      Writing objects: 100% (5/5), 467 bytes, done.
-      Total 5 (delta 1), reused 0 (delta 0)
-      remote: HEAD is now at af5dfdb x
-      remote: 
-      remote: ----------------------------
-      remote:   Webbynode git deployment 
-      remote: ----------------------------
-      remote: 
-      remote: Apache webserver detected...
-      remote: Deploying application r3app as mywebsite.com...
-      remote: 
-      remote: Configuring addons...
-      remote: 
-      remote: Configuring Rails 3 application...
-      remote:   => Configuring apache vHost...
-      remote:      Recreating vhost with aliases: subdomain.mywebsite.com...
-      remote:   => Configuring database...
-      remote:   => Bundling gems...
-      remote:   => Migrating database...
-      remote: /var/rapp/r3app
-      remote: 
-      remote: Restarting apache
-      remote: 
-      remote: r3app deployed successfully.
-      remote: 
-
-      To ssh://git@67.23.79.85:22/var/rapp/r3app
-      760c838..af5dfdb  HEAD -> master
-
-      [Webbynode] Finished pushing r3app
-
-      From this point, all your aliases should be reflected on the server.
-
-%h3 Redirection
-
-%h4 Using nginx
-
-Log into your Webby using the <b>git</b> user, and go to the following directory:
-
-%code
-  %pre
-    :preserve
-      cd /opt/nginx/phd-sites
-
-Let’s assume you want to redirect the domain mydomain.us to mydomain.com. You’ll 
-have to create a file called mydomain.us with the following contents:
-
-%code
-  %pre
-    :preserve
-      server {
-        listen              80;
-        server_name         mydomain.us;
-        rewrite             ^/(.*) http://mydomain.com/$1 permanent;
-      }
-
-Finally, restart nginx:
-
-%code
-  %pre
-    :preserve
-      /etc/init.d/nginx restart
-
-And then when you visit any URL in mydomain.us, it should redirect to the same URL in mydomain.com.
+%ul
+  %li
+    = link "Changing domain", "dns_changing_domain" 
+    teaches how you can change the domain your application responds to;
+  %li
+    = link "Wildcards",       "dns_wildcards"
+    shows how you can configure your application to respond to any subdomain of a given domain;
+  %li
+    = link "Aliases",         "dns_aliases"
+    shows how to make your app respond to more than one domain and/or subdomain;
+  %li
+    = link "Redirection",     "dns_redirection"
+    has a brief example of how you can manually configure your webserver to do a redirect
+    from one domain to the other;
 

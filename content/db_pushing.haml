@@ -1,0 +1,42 @@
+%h3 Database Push
+
+%p
+  If you have local database data and you want to transfer this
+  data to your Webby, you can use the <b>database push</b>
+  command.
+
+%p
+  In this case, here's the local data we want to transfer, and 
+  current data on the server:
+
+%p.center
+  <img src="/images/database/local-database.png">
+
+%p.center
+  <img src="/images/database/remote-before-push.png">
+
+%p
+  Then we execute the <b>push</b> command:
+
+%code
+  %pre
+    :preserve
+      $ wn database push
+      Pushing remote data to database screencast
+      Sending schema
+      Schema:        100% |==========================================| Time: 00:00:04
+      Sending data
+      2 tables, 4 records
+      schema_migrat: 100% |==========================================| Time: 00:00:00
+      users:         100% |==========================================| Time: 00:00:00
+      Sending indexes
+      schema_migrat: 100% |==========================================| Time: 00:00:00
+      Resetting sequences
+      Stopping taps server...
+
+%p
+  And the database after the <b>push</b> is finished:
+
+%p.center
+  <img src="/images/database/remote-after-push.png">
+

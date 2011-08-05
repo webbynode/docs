@@ -1,0 +1,49 @@
+--- 
+title: Wildcards
+---
+
+%h3 Wildcards
+
+For applications that uses subdomains, a wildcard domain may be necessary. To use a wildcard 
+DNS with Webbynode gem, just change the DNS using <b>*.yourdomain.com</b>:
+
+%code
+  %pre
+    :preserve
+      $ wn change_dns \*.rubyista.com
+      [Webbynode] Changing DNS to *.rubyista.com...
+      Creating DNS entry for *.rubyista.com...
+      Your application will start responding to 
+      *.rubyista.com after next deployment.
+
+Next time you push your app you will note the following output:
+
+%code
+  %pre
+    :preserve
+      $ wn push
+      [Webbynode] Pushing r3app
+      Counting objects: 146, done.
+      Delta compression using up to 2 threads.
+      Compressing objects: 100% (122/122), done.
+      Writing objects: 100% (146/146), 94.78 KiB, done.
+      Total 146 (delta 34), reused 0 (delta 0)
+      remote: Checked out master branch
+      remote: 
+      remote: ----------------------------
+      remote:   Webbynode git deployment 
+      remote: ----------------------------
+      remote: 
+      remote: Apache webserver detected...
+      remote: Deploying application r3app as *.rubyista.com...
+      remote: 
+      remote: Configuring addons...
+      remote: 
+      remote: Configuring Rails 3 application...
+      remote:   => Configuring apache vHost...
+      remote:      Setting up wildcard alias...
+      (...)
+
+After that, your application will start responding to anything that ends with the domain you 
+specified, in this case <b>rubyista.com</b>.
+

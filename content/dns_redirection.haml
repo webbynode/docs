@@ -1,0 +1,37 @@
+--- 
+title: Handling DNS
+---
+
+%h2 Redirection
+
+%h3 Using nginx
+
+Log into your Webby using the <b>git</b> user, and go to the following directory:
+
+%code
+  %pre
+    :preserve
+      cd /opt/nginx/phd-sites
+
+Let’s assume you want to redirect the domain mydomain.us to mydomain.com. You’ll 
+have to create a file called mydomain.us with the following contents:
+
+%code
+  %pre
+    :preserve
+      server {
+        listen              80;
+        server_name         mydomain.us;
+        rewrite             ^/(.*) http://mydomain.com/$1 permanent;
+      }
+
+Finally, restart nginx:
+
+%code
+  %pre
+    :preserve
+      /etc/init.d/nginx restart
+
+And then when you visit any URL in mydomain.us, it should redirect to the same URL in mydomain.com.
+
+
