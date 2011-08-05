@@ -1,0 +1,227 @@
+--- 
+title: Bootstrapping
+---
+
+%h2 Bootstrapping
+
+%p
+  Before deploying your application, you need to specify a couple of 
+  configuration options. The first and most important is where you'll 
+  want to install it.
+
+%p
+  In order to do that, you'll need to install the Webbynode's RubyGem 
+  <b>on your local machine</b>, by executing the following command:
+
+%pre
+  %code
+    :preserve
+      $ gem install webbynode
+      
+      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+            Webbynode Rapid Deployment Gem
+      -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+      Thank you for installing Webbynode gem. You're now
+      able to deploy and manage your applications from
+      the comfort of your command line.
+
+      Please read our guide for a quickstart:
+      http://guides.webbynode.com/articles/rapidapps/
+
+      For more information use the commands:
+      wn help
+      wn guides
+
+      Successfully installed webbynode-1.0.6
+      1 gem installed
+      
+%p
+  After installing the gem, you need to initialize your
+  application for deployment.
+  
+%p
+  To do that, you use the <b>wn init</b> command.
+  The command is interactive and asks a couple of informations,
+  depending on what you're trying to deploy.
+  
+%h3 Webbynode credentials
+
+%p
+  The first time you run the wn init command, after installing
+  the gem, you'll be prompted to enter your Webbynode credentials:
+
+%pre
+  %code
+    :preserve
+      $ cd ~/dev/sampleapp
+      $ wn init sandbox
+      [Webbynode] Initializing application sampleapp with dns sampleapp
+                  Retrieving IP for Webby sandbox...
+
+      Webbynode API Token
+
+      For optimal usage of all the features provided by the Webbynode Gem, 
+      we need to interact with your account.
+
+      Please provide below the email you use to login on Webbymanager and 
+      your APIToken. The API token can be found on the Account section of 
+      Webbymanager. For more instructions, visit this link:
+
+        http://guides.webbynode.com/articles/rapidapps/bootstrapping.html
+
+      Please provide your credentials below.
+
+      Login email:
+
+%p
+  To interact with your account, you will need to provide your Webby Manager
+  email and API token. 
+  
+%p
+  To locate that information, open Webby Manager, login and and click the Account 
+  tab, like shown below:
+
+%p.center
+  <img src="/images/manager/manager-account.png">
+
+%p
+  Just copy the token and paste it to the prompt on the terminal.
+
+%p
+  From this point on you won't have to enter this information again, since it's 
+  now stored in a file called <b>.webbynode</b> under your home directory.
+  
+.hint
+  %b HINTS:
+  %ul
+    %li
+      If you have multiple Webbynode accounts, you can switch 
+      between them using the <a href="accounts">wn accounts</a> 
+      command;
+    %li
+      If your token changes (it will if you change your Webby
+      Manager password, for instance), you can update your
+      credentials using the <a href="config">wn config</a>
+      command;
+
+%h3 Targeting your deployment
+
+%p
+  The first information you need to provide is what is the
+  target of your deployment.
+
+%p
+  If you have only one Webby, the <b>wn init</b> 
+  is smart enough to assume that's the target of
+  your deployment and skip the question;
+
+%p
+  Here's the example output of the wn init command when
+  you have more than one Webby in your account:
+  
+%pre
+  %code
+    :preserve
+      $ wn init
+      Webbynode Rapp - http://rapp.webbynode.com
+
+      Current Webbies in your account:
+
+        1. sandbox (2.43.137.2)
+        2. webby4339 (2.120.183.66)
+        3. webby5336 (2.55.6.30)
+        4. webby5399 (30.22.248.39)
+        5. webby5433 (208.55.222.221)
+        6. webby5803 (30.22.221.131)
+        7. webby5856 (208.55.222.64)
+        8. webby6047 (37.23.79.85)
+
+      Which Webby do you want to deploy to:
+      8
+
+      Set deployment Webby to webby6047.
+      Initializing application test_app with dns test_app
+
+      Initializing directory structure...
+
+      Initializing git and applying initial commit...
+      Adding webbynode as git remote, please wait...
+
+      [Webbynode] Application test_app ready for Rapid Deployment
+      
+%p
+  Just choose the Webby you want to deploy to.
+
+%h3 Application engine
+
+%p
+  The deployment tool will scan a few files in your application to try
+  to detect what engine it uses (Rails, Rack, etc.).
+
+%p
+  Some engines are auto-detectable, like for instance, applications
+  written in Rails 2, Rails 3, Rack and a few others doesn't need
+  you to specify that option.
+
+%p
+  When that detection fails, you'll be presented with a menu
+  with all the engines we support:
+
+%pre
+  %code
+    :preserve
+      Initializing application static_app with dns static_app
+
+      Supported engines:
+
+        1. Html
+        2. Django
+        3. WSGI
+        4. PHP
+        5. Rack
+        6. Rails 2
+        7. Rails 3
+        8. NodeJS
+
+      Select the engine your app uses:
+
+%p
+  Again, choose the number correspondent to the engine you want.
+
+%h3 Application domain name
+
+%p
+  Initially our engine will assign a temporary <b>webbyapp.com</b> domain for you application, 
+  you can use your website and even share it without having to buy a domain.
+  
+%p
+  However, if you already have a domain and considering you have properly
+  setup the Webbynode name servers with your registrar, the gem will handle
+  adding the DNS entries. For more information about how you can manage
+  your application domains using the Webbynode deployment tool, check the
+  <a href="/handling_dns">Handling DNS</a> section.
+  
+.note
+  %b NOTE:
+  We will try to get the domain that best matches your application name.
+  For instance, if your application is called <b>flipflop</b>, we'll
+  try to assign the domain <b>flipflop.webbyapp.com</b>. If it's 
+  used, we'll add a number until it's unique... So you could end up with 
+  <b>flipflop203.webbyapp.com</b>, considering you have a popular application 
+  name.
+
+
+%h3 Summary
+
+Here's a summary of what <b>wn init</b> does:
+
+%p
+  %ul
+    %li creates a git repo for your application, if it doesn't have one;
+    %li adds a new git remote, called <b>webbynode</b> and points it to your Webby's IP;
+    %li creates a new local ssh key, in case you don't have one;
+    %li uploads the ssh key to your Webby's git user;
+    %li creates a new git commit for the changes above.
+  
+Now your application is ready to be <a href="/publishing/">published</a>.

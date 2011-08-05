@@ -1,0 +1,118 @@
+--- 
+title: Security
+---
+
+%h2 Webbynode RubyGem
+
+%p
+  Our deployment tool has an opinionated approach to security: as soon as you deploy
+  your first application, we'll block password-based ssh logins for the <b>root</b>
+  user.
+
+%p
+  For your day to day tasks you can use the <b>git</b> user, which is created
+  for the interaction with the server. This user is a sudoer, so you can do 
+  virtually anything the <b>root</b> user can do using the <b>sudo</b> 
+  command.
+
+%h3 Using ssh
+
+%p
+  To login with the git user, just go to your application local directory and
+  user the <b>ssh</b> command:
+
+%code
+  %pre
+    :preserve
+      $ cd ~/apps/superduper
+      $ wn ssh
+      Linux sandbox 2.6.32-24-generic-pae #39-Ubuntu SMP Wed Jul 28 07:39:26
+      Ubuntu 10.04.1 LTS
+
+      Welcome to Ubuntu!
+      * Documentation:  https://help.ubuntu.com/
+
+      System information as of Wed Feb 23 11:22:28 EST 2011
+
+      System load:  0.0                Processes:           107
+      Usage of /:   11.2% of 11.81GB   Users logged in:     1
+      Memory usage: 32%                IP address for eth0: 100.200.10.1
+      Swap usage:   0%
+
+      Graph this data and manage this system at 
+      https://landscape.canonical.com/
+
+%p
+  You can alternatively still login using the git user directly:
+
+%code
+  %pre
+    :preserve
+      $ ssh git@88.12.1.2
+
+%p
+  If the machine you're in already have its ssh key in the server,
+  you won't be prompted for a password.
+
+%p
+  If that's not the case, you can use the <b>sshkey</b> command
+  to add your ssh public key to your Webby. If you don't currently
+  have a local ssh public key, this command will attempt to
+  create one:
+
+%code
+  %pre
+    :preserve
+      $ wn addkey
+      Your local SSH Key has been added to your webby!
+
+%h3 Running remote commands
+
+%p
+  The preferred way of running commands for an application, is using
+  the <b>remote</b> command. With it, the command is executed in the
+  context of your application, and you don't even have to log to
+  your Webby:
+
+%code
+  %pre
+    :preserve
+       [imac27] fcoury:~/Projects/nodeapp [git:master] wn remote ls -la
+       Performing the requested remote command...
+       total 28
+       drwxr-xr-x 4 git git      4096 2011-02-23 11:18 .
+       drwxr-xr-x 6 git www-data 4096 2011-02-23 09:50 ..
+       drwxr-xr-x 8 git git      4096 2011-02-23 11:18 .git
+       -rwxr-xr-x 1 git git        36 2011-02-22 23:15 .pushand
+       -rw-r--r-- 1 git www-data  531 2011-02-22 23:15 server.js
+       drwxr-xr-x 3 git git      4096 2011-02-23 01:26 .webbynode
+       -rw-r--r-- 1 git www-data   52 2011-02-23 11:18 x
+
+       [imac27] fcoury:~/Projects/nodeapp [git:master] $
+
+%h3 Allowing passwordless root login
+
+%p
+  You can restore <b>root</b> user access to your Webby using the
+  <b>authroot</b> command. This command is similar to <b>addkey</b>,
+  but it will add your ssh public key to the <b>root</b> user,
+  allowing you to login as <b>root</b> without typing a password.
+
+%p
+  This is the preferred method of authentication when you need
+  root access to your Webby.
+
+%h3 Restoring password based root login
+
+%p
+  We strongly advise you use this option only as a last resort. However,
+  to enable root based authentication, just run:
+
+%code
+  %pre
+    :preserve
+      $wn settings add allow_root true
+
+%p
+  Next time you push your application, root password will be re-enabled.
+

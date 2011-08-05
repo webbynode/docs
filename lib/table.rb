@@ -11,6 +11,7 @@ def table(options)
 
   contents << "</tr></thead><tbody>"
   
+  options[:contents] = [options[:contents]] if options[:contents].is_a?(String)
   options[:contents].each do |line|
     contents << "<tr>"
     line.split("|").each_with_index do |cell, i|

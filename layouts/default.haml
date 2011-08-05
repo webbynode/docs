@@ -55,7 +55,13 @@
             %ul
               %li= link 'Security'
               %li= link 'Engines'
-              %li= link 'Handling DNS'
+              %li
+                = link 'Handling DNS'
+                %ul
+                  %li= sub_link "dns", "Changing domain"
+                  %li= sub_link "dns", "Wildcards"
+                  %li= sub_link "dns", "Aliases"
+                  %li= sub_link "dns", "Redirection"
               %li= link 'Add-ons'
               %li= link 'Backups'
               %li= link 'Deployment Hooks'

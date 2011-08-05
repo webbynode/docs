@@ -1,0 +1,56 @@
+--- 
+title: Webbynode RubyGem
+---
+
+%h2 Webbynode RubyGem
+
+%p
+  The <a href="http://rubygems.org/gems/webbynode">Webbynode RubyGem</a> is the
+  gateway to automate your deployment cycle from your command line.
+
+%h3 Prerequisites
+
+%ul
+  %li Ruby (tested with MRI 1.8.7 and 1.9.2, REE and JRuby)
+  %li RubyGems (latest version recommended)
+  %li a Webbynode account with at least one Webby
+  %li Mac OS X, Linux or Windows
+
+%h3 Installation
+
+%p
+  Once you have your Ruby and RubyGems environment setup, you just have to install
+  the Webbynode RubyGem with the following command:
+
+%code
+  %pre
+    :preserve
+      $ [sudo] gem install webbynode
+
+%p
+  From time to time we release a new beta version with some new features and bugfixes.
+  You can follow <a href="http://twitter.com/webbynode">@webbynode</a> on twitter to
+  learn when a new beta version is out.
+
+%p
+  To install a beta version, you just have to pass the <b>--pre</b> option to to the
+  same command:
+
+%code
+  %pre
+    :preserve
+      $ [sudo] gem install --pre webbynode
+
+%p
+  After the installation complete you will be read to start deploying your applications.
+
+%p
+  If you want to check what version of the Webbynode RubyGem you have installed, just
+  run the <b>version</b> command, like shown below:
+
+%code
+  %pre
+    :preserve
+      $ webbynode version
+      Rapid Deployment Gem v1.0.5.beta5
+

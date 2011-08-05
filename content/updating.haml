@@ -1,0 +1,131 @@
+--- 
+title: Updating
+---
+
+%h2 Updating
+
+%p
+  Now that your application have been deployed, you can use your normal
+  git workflow that you're probably used to. When times comes to update
+  the deployed version, just use <b>wn push</b> again.
+  
+%p
+  After finishing the last set of changes, you can git add and commit them:
+  
+%pre
+  %code
+    :preserve
+      $ git add .
+      $ git commit -m "My changeset"
+
+%p
+  And then repeat the <b>wn push</b> command:
+  
+%pre
+  %code
+    :preserve
+      $ webbynode push
+      Publishing myapp to Webbynode...
+      mkdir: created directory `myapp'
+      Counting objects: 86, done.
+      ...
+
+%h2 Pending changes
+
+%p
+  If you attempt to update your application with pending git 
+  changes (ie, if your working directory is not clean), the push
+  will fail with the following error message:
+  
+%pre
+  %code
+    :preserve
+      $ wn push
+      Cannot push because you have pending changes. Do a git commit or add changes to .gitignore.
+
+%p
+  A <b>git status</b> should show you what are the pending changes:
+  
+%pre
+  %code
+    :preserve
+      $ git status
+      # On branch master
+      # Changed but not updated:
+      #   (use "git add <file>..." to update what will be committed)
+      #   (use "git checkout -- <file>..." to discard changes in working 
+      directory)
+      #
+      #       modified:   README
+      #
+      # Untracked files:
+      #   (use "git add <file>..." to include in what will be committed)
+      #
+      #       temp/
+      no changes added to commit (use "git add" and/or "git commit -a")
+
+%p
+  If you're in this situation, you have to options: either handle the
+  changes, by committing, stashing or ignoring them, like below:
+  
+%pre
+  %code
+    :preserve
+      $ echo "\ntemp/" >> .gitignore
+      $ git status
+      # On branch master
+      # Changed but not updated:
+      #   (use "git add <file>..." to update what will be committed)
+      #   (use "git checkout -- <file>..." to discard changes in working 
+      directory)
+      #
+      #       modified:   .gitignore
+      #       modified:   README
+      #
+      no changes added to commit (use "git add" and/or "git commit -a")
+      
+%p
+  And after a commit the push should work again.
+  
+%pre
+  %code
+    :preserve
+      $ git commit -am "Fixed README and added temp to .gitignore" 
+      [master 7d63ae9] Fixed README and added temp to .gitignore
+       2 files changed, 4 insertions(+), 1 deletions(-)
+
+      $ wn push
+      [imac] fcoury:~/Projects/sampleapp [git:master] → wn push
+      [Webbynode] Pushing sampleapp
+
+      (...)
+
+      ----------------------------
+        Webbynode git deployment 
+      ----------------------------
+
+      Nginx+Passenger webserver detected...
+      Setting up DNS...
+
+      Deploying application sampleapp as sampleapp.webbyapp.com...
+
+      (...)
+
+      sampleapp deployed successfully.
+
+      Created http://sampleapp.webbyapp.com/
+
+      To git@67.23.79.32:sampleapp
+         eeaa391..7d63ae9  master -> master
+
+      [Webbynode] Finished pushing sampleapp
+
+%h2 Pushing from a dirty git working directory
+
+%p
+  If you still want to push form a dirty working directory,
+  you can enforce the push using the <b>--dirty</b> option.
+  
+%p
+  Please note using this option only pushes the changes made 
+  up to the last git commit.

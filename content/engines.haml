@@ -1,0 +1,95 @@
+--- 
+title: Engines
+---
+
+%h2 Supported Engines
+
+%p
+  The deployment engine supports the following engines:
+
+  %ul
+    %li <a href="#html">Static HTML</a>
+    %li <a href="#django">Django</a>
+    %li <a href="#php">PHP</a>
+    %li <a href="#rack">Rack</a>
+    %li <a href="#rails">Rails 2</a>
+    %li <a href="#rails3">Rails 3</a>
+    %li <a href="#wsgi">wsgi</a>
+    %li <a href="#nodejs">Node.js</a>
+
+%p
+  As explained in our <a href="/bootstrapping/">bootstrapping</a> section,
+  some engines are auto-detectable while others are not.
+
+%p
+  In some edge cases, even some detectable engines won't be properly detected.
+  When that happens, you will be prompted for the engine when you run
+  the <b>init</b> command:
+
+%code
+  %pre
+    :preserve
+      Webbynode Rapp - http://rapp.webbynode.com
+       
+      Set deployment Webby to webby6047.
+      Initializing application static_app with dns static_app
+
+      Supported engines:
+
+      1. Html
+      2. Django
+      3. WSGI
+      4. PHP
+      5. Rack
+      6. Rails 2
+      7. Rails 3
+      8. NodeJS
+
+      Select the engine your app uses:
+      1   
+      Initializing with Html engine...
+
+%p
+  Alternatively, you can pass that option, as a string, to the <b>--engine</b>
+  option:
+
+%code
+  %pre
+    :preserve
+      $ wn init --engine=html
+
+%h3 <a name="html"></a>Static HTML
+
+%p
+  %b Engine name:
+  html
+
+%p
+  When you deploy a static html application, no database is created and the Webserver
+  is also not restarted, just push your changes and they are live.
+
+%h3 <a name="nodejs"></a>Node.js
+
+%p
+  %b Engine name:
+  nodejs
+
+%p
+  See the <a href="/nodejs/">dedicated Node.js section</a>.
+
+%h3 <a name="django">Django 1.2.1</a>
+
+%p
+  %b Engine name:
+  django
+
+%p
+  See the <a href="/django/">dedicated Django section</a>.
+
+%h3 <a name="php"></a>PHP
+
+%p
+  %b Engine name:
+  php
+
+

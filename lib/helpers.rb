@@ -16,6 +16,13 @@ def link(label, url=nil)
   link_to label, url || "/#{label.downcase.gsub(" ", "_")}/", options
 end
 
+def sub_link(parent, label, url=nil)
+  options = {}
+  options = { :target => '_blank' } if url =~ /^https?:/
+    
+  link_to label, url || "/#{parent.downcase.gsub(" ", "_")}_#{label.downcase.gsub(" ", "_")}/", options
+end
+
 def image_tag(url, options = {})
   html =  "<img src=\"/images/#{url}\" "  
   html += options[:title] ? "title=\"#{options[:title]}\" " : ""

@@ -1,0 +1,78 @@
+--- 
+title: Publishing
+---
+
+%h2 Publishing
+
+%p
+  To publish your application to the Webby you configured during
+  the <a href="/bootstrapping/">bootstrapping</a>, you just need
+  to use the <b>wn push</b> command.
+
+%p
+  Here's a sample output of the command:
+  
+
+%pre
+  %code
+    :preserve
+      $ wn push
+      [Webbynode] Pushing static_app
+      Counting objects: 132, done.
+      Delta compression using up to 2 threads.
+      Compressing objects: 100% (105/105), done.
+      Writing objects: 100% (132/132), 3.04 MiB | 189 KiB/s, done.
+      Total 132 (delta 22), reused 0 (delta 0)
+      remote: HEAD is now at 9140ccf [Webbynode] Rapid App Deployment Reinitialization
+      remote: 
+      remote: ----------------------------
+      remote:   Webbynode git deployment 
+      remote: ----------------------------
+      remote: 
+      remote: Apache webserver detected...
+      remote: Setting up DNS...
+      remote: 
+      remote: Deploying application output as static_app.webbyapp.com...
+      remote: 
+      remote: Configuring addons...
+      remote: 
+      remote: Configuring html application...
+      remote:   => Configuring apache vHost...
+      remote: /var/rapp/output
+      remote: 
+      remote: Restarting apache
+      remote: 
+      remote: output deployed successfully.
+      remote: 
+      remote: Created http://static_app.webbyapp.com/
+      remote: 
+      To ssh://git@67.23.79.85:22/var/rapp/static_app
+       * [new branch]      HEAD -> master
+
+      [Webbynode] Finished pushing output
+
+%p
+  Depending on the engine used, many tasks are executed while your
+  application is pushed to the server.
+  
+%p
+  The common part is creating a vhost entry for you webserver and
+  pointing it to the deployment folder.
+  
+%p
+  In more complex engines, like Rails, tasks like creating a database
+  user, a new database, database.yml, bundling or gems installation,
+  database migration, among others will occur after the push.
+  
+%p
+  For more information, learn <a href="/updating/">how to update a 
+  deployed application</a>.
+  
+.important
+  %b IMPORTANT:
+  When pushing an application for the first time to your Webby, 
+  ssh login for the root user will be disabled.
+  To understand the reasons behind this, and how to override this
+  behavior if you want, check the <a href="/security/">security</a>
+  section.
+  
