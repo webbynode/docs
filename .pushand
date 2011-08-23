@@ -1,2 +1,2 @@
 #! /bin/bash
-phd $0 docs docs
+phd $0 docs docs.webbyapp.com
