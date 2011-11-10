@@ -64,6 +64,17 @@ title: Publishing
   user, a new database, database.yml, bundling or gems installation,
   database migration, among others will occur after the push.
   
+%h3 Database and database user
+
+%p
+  When your application is pushed, a new database user will be created.
+  The database name is the name of your application (in our case above
+  it will be <b>static_app</b>).
+  
+%p
+  A database user with same name will be created. The password will
+  be the same as the one you used for your deployment user (<b>git</b>).
+  
 %p
   For more information, learn <a href="/updating/">how to update a 
   deployed application</a>.
