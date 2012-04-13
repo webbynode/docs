@@ -1,8 +1,8 @@
-# StackFu Documentation
+# Webbynode Documentation
 
 ## Website
 
-[http://docs.stackfu.com/](http://docs.stackfu.com/)
+[http://docs.webbyapp.com/](http://docs.webbyapp.com/)
 
 ## Requirements
 
