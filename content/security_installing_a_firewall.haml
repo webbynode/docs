@@ -1,0 +1,139 @@
+%h1 Installing a Firewall
+
+%p
+  One of the first things you should do after bootstrapping a new Webby is tighten its security. Many hacking attempts are successful because users choose weak passwords and leave common ports open and listening. 
+
+  In this guide we'll walk you through how to install and configure an easy-to-use firewall package called ufw (Uncomplicated Firewall) that is available through <b>apt-get</b>.
+
+%h2 Requirements
+
+%p
+  This guide was written using Ubuntu 10.04 but should work without changes for Ubuntu 8.04 or later.
+
+%h2 Installation
+
+%p
+  To install <b>ufw</b> you just have to use apt-get, it's that simple:
+
+%code
+  %pre
+    :preserve
+      $ apt-get update
+      $ apt-get install ufw
+
+.note
+  %b NOTE:
+  If you're not logged in as the <b>root</b> user you'll need to use <b>sudo apt-get install ufw</b>.
+
+%h2 Configuration
+
+%p
+  Configuring <b>ufw</b> is almost as simple as installing it. It's a very intuitive tool.
+
+%p
+  Ufw comes disabled by default, so the first thing you want to do is enable it and answer <b>y</b> to the prompt:
+
+%code
+  %pre
+    :preserve
+      $ ufw enable
+      Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
+      Firewall is active and enabled on system startup
+
+%p
+  Alright, now it's enabled and will be executed upon server startup as well. This way, even if you reboot your Webby, <b>ufw</b> will continue to run.
+
+%h3 Denying connections by default
+
+%p
+  When installed, <b>ufw</b> acts very unobtrusively: it won't close access to any ports. However, in order to really secure our system, we should take the inverse approach. This approach is deny any connections, except the ones we explicitly find we need.
+
+%p
+  Before changing the default <b>ufw</b> operation mode, let's make sure we allow connections to the <b>ssh</b> port we're connected to:
+
+%code
+  %pre
+    :preserve
+      $ ufw allow 22
+      Rule added
+
+%p
+  You can now check that this rule was properly added:
+
+%code
+  %pre
+    :preserve
+      $ ufw status  
+      Status: active
+
+      To                         Action  From
+      --                         ------  ----
+      22                         ALLOW   Anywhere
+
+%p
+  Now that <b>ssh</b> is good to go, let's shut everything else down:
+
+%code
+  %pre
+    :preserve
+      $ ufw default deny
+      Default policy changed to 'deny'
+      (be sure to update your rules accordingly)
+
+%p
+  Now you have to start allowing all the ports you plan on using on this Webby. For instance, if you are serving html pages from Apache or running a Rails application, you should open port 80:
+
+%code
+  %pre
+    :preserve
+      $ ufw allow 80
+      Rule added
+
+%p
+  In case you're in doubt about which port a service uses by default, you can check <a href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers">this link in Wikipedia</a>.
+
+%h3 Fine grained security
+
+%p
+  If you want to be even more secure, here's another tip to improve security.
+
+%p
+  Let's say you're running a MySQL Database Server on your Webby and your app has grown and you want to have another  Webby to server Web requests. In order to allow the other Webby to connect to the MySQL Server that is running locally, you could simply allow 3306 (MySQL default listening port), or you could only allow the other Webby to connect.
+
+%p
+  This is very simple as well. Let's say <b>webby_mysql</b> is (obviously) where MySQL is and the new Webby goes by the name of <b>webby_appserver</b> and has an internal IP of <b>172.16.0.94</b>. All you have to do is find <b>webby_appserver</b>'s IP (preferably the internal one) and add it to the allowed list of IPs for port 3306.
+
+%p
+  Here's how we achieve it:
+
+%code
+  %pre
+    :preserve
+      $ ufw allow from 172.16.0.94 to any port 3306
+      Rule added
+
+%p
+  And you can double check it:
+
+%code
+  %pre
+    :preserve
+      $ ufw status
+      Status: active
+
+      To                         Action  From
+      --                         ------  ----
+      22                         ALLOW   Anywhere
+      3306                       ALLOW   172.16.0.94
+
+%h3 Further reference
+
+%p
+  You can do a lot more with <b>ufw</b>: things like allowing an IP range, allowing only tcp or only udp connections, etc. 
+
+%p
+  For further reference, you can visit:
+
+%ul
+  %li <a href="https://help.ubuntu.com/8.10/serverguide/C/firewall.html">Ubuntu Firewall</a> article on Ubuntu Official Documentation;
+  %li <a href="https://wiki.ubuntu.com/UncomplicatedFirewall?action=show&redirect=UbuntuFirewall">Uncomplicated Firewall</a> on Ubuntu Wiki;
