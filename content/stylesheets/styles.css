@@ -165,3 +165,8 @@ td.example {
   width: 35%;
   text-align: left;
 }
+
+.entry {
+  border-bottom: 1px #ccc solid;
+  margin: 10px 0 10px 10px;
+}
