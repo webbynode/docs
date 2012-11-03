@@ -22,6 +22,18 @@ title: Troubleshooting
         $ cd /var/rapp/my_application
         $ RAILS_ENV=production bundle exec rake assets:precompile
 
+  %p
+    Or add a new post-deployment hook to your app by running the following
+    command locally:
+
+  %pre
+    %code
+      :preserve
+        $ wn tasks add after_push RAILS_ENV=production bundle exec rake assets:precompile
+
+  %p
+    And then push your application again.
+
 .entry
   %b Problem: 
   %p
