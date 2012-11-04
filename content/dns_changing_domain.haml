@@ -4,35 +4,41 @@ title: Changing the domain
 
 %h2 Changing the domain
 
-To change the DNS entry your application responds to, you need to use the <b>change_dns</b> command.
+%p
+  To change the DNS entry your application responds to, you need to use the <b>change_dns</b> command.
 
-Here's an example of how it's used:
+%p
+  <iframe width="640" height="360" src="http://www.youtube.com/embed/bYBDr5Q-bLc" frameborder="0" allowfullscreen></iframe>
 
-%code
-  %pre
-    :preserve
-      $ wn change_dns rubyista.info
-      [Webbynode] Changing DNS to rubyista.info...
-      Creating DNS entries for www.rubyista.info and rubyista.info...
-      Your application will start responding to rubyista.info after next deployment.
+%p
+  Here's an example of how it's used:
 
-.hint
-  %b HINT:
-  If you use a top-level domain name (ie, mydomain.com) the gem will automatically
-  add the domain to Webby Manager's DNS Server, and you don't need to do any manual
-  changes.
+%p
+  %code
+    %pre
+      :preserve
+        $ wn change_dns rubyista.info
+        [Webbynode] Changing DNS to rubyista.info...
+        Creating DNS entries for www.rubyista.info and rubyista.info...
+        Your application will start responding to rubyista.info after next deployment.
 
-Here's another example, now with a subdomain:
+  .hint
+    %b HINT:
+    If you use a top-level domain name (ie, mydomain.com) the gem will automatically
+    add the domain to Webby Manager's DNS Server, and you don't need to do any manual
+    changes.
 
-%code
-  %pre
-    :preserve
-      $ wn change_dns subdomain.rubyista.info
-      [Webbynode] Changing DNS to subdomain.rubyista.info...
-      Creating DNS entry for subdomain.rubyista.info...
-      Your application will start responding to 
-      subdomain.rubyista.info after next deployment.
+  Here's another example, now with a subdomain:
 
-After you run this command, the application will start responding to the new DNS entry
-after your next push.
+  %code
+    %pre
+      :preserve
+        $ wn change_dns subdomain.rubyista.info
+        [Webbynode] Changing DNS to subdomain.rubyista.info...
+        Creating DNS entry for subdomain.rubyista.info...
+        Your application will start responding to 
+        subdomain.rubyista.info after next deployment.
+
+  After you run this command, the application will start responding to the new DNS entry
+  after your next push.
 
